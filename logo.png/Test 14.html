@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University College Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        /* Adjusted container width for better mobile margin */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0; /* Remove default padding to let inner elements handle it */
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        /* Item styling for all levels of navigation */
+        .nav-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-weight: 500;
+            color: #1f2937;
+        }
+        .nav-item:hover {
+            background-color: #f9fafb;
+        }
+        .nav-item:last-child {
+            border-bottom: none;
+        }
+        
+        .tab-button.active {
+            background-color: #3b82f6; /* Blue 500 */
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.5);
+        }
+        
+        /* Back button style to use primary blue */
+        .back-button {
+            background-color: #3b82f6; /* Blue 500 */
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.4); /* Add subtle shadow */
+        }
+        .back-button:hover {
+            background-color: #2563eb; /* Blue 600 */
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.5); /* Stronger shadow on hover */
+        }
+        
+        /* Style for the logo image */
+        #siteLogo {
+            display: block;
+            margin: 0 auto 8px; /* Center and add a little space below */
+            width: 64px; /* Increased size */
+            height: 64px; /* Increased size */
+            border-radius: 8px; /* Optional: adds rounded corners to the image */
+            object-fit: cover; /* Changed to cover to fill the space */
+            padding: 4px; /* Added padding to create a small white border effect */
+            background-color: white; /* Ensures a white background behind the logo */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Optional: subtle shadow for depth */
+        }
+        .footer {
+            margin-top: 32px;
+            padding: 16px 0;
+            text-align: center;
+            color: #6b7280; /* Gray 500 */
+            font-size: 0.875rem; /* text-sm */
+        }
+        .footer-link {
+            color: #ef4444; /* Red 500 for YouTube */
+            font-weight: 600;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+        .footer-link:hover {
+            color: #dc2626; /* Red 600 */
+        }
+        /* Style for the institution tabs container */
+        #institutionTabsContainer {
+            overflow-x: auto; /* Required for horizontal scrolling on small screens */
+            -webkit-overflow-scrolling: touch;
+        }
+        #institutionTabsContainer .tab-button {
+            flex-shrink: 0; /* Prevent buttons from shrinking */
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 90%;
+            width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    
+
+<div class="container min-h-screen p-4 sm:p-6"> 
+
+<header class="text-center py-6 relative">
+            
+            <!-- Info Button for Contact Details -->
+            <button id="infoButton" class="absolute top-6 right-0 text-2xl text-blue-500 hover:text-blue-700 transition duration-300 p-2 rounded-full bg-white shadow-md">
+                <i class="fas fa-info-circle"></i>
+            </button>
+
+<img id="siteLogo" 
+                 src="logo.png" 
+                 alt="UC University Logo"
+                 onerror="this.onerror=null; this.src='https://placehold.co/64x64/f3f4f6/3b82f6?text=UC'">
+
+            <h1 class="text-3xl font-bold text-gray-900">University College Master</h1>
+            <p class="text-gray-500 mt-2">Everything in Your Hand</p>
+        </header>
+
+        <!-- Institution Tabs Container - Now uses 'justify-center' -->
+<div id="institutionTabsContainer" class="flex flex-nowrap justify-center gap-2 p-4 mb-4 bg-white rounded-xl shadow-sm">
+            <!-- Buttons will be rendered here by JavaScript -->
+        </div>
+
+        
+        <!-- UPDATED: Level Buttons Container (Now a vertical list within a card) -->
+<div id="levelTabsContainer" class="card hidden p-0">
+            <!-- Level buttons will be rendered here by JavaScript -->
+</div>
+
+        
+
+<div id="backButtonContainer" class="mb-4 hidden p-0 sm:p-0">
+            <button id="backButton" class="back-button flex items-center">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span id="backButtonText">Back</span>
+            </button>
+        </div>
+
+        
+
+<main class="py-4">
+            
+            
+
+<div id="subjectsView">
+                <h2 id="currentTitle" class="text-2xl font-bold mb-6 text-gray-900 text-center">Select an HND Course</h2>
+                <div class="search-bar-container hidden" id="searchContainer">
+                    <input type="text" id="searchInput" placeholder="Search for a subject..."
+                           class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4">
+                </div>
+                <div id="subjectsList" class="card">
+                    
+
+</div>
+                <div id="noResults" class="hidden text-center text-gray-500 mt-8">
+                    <p class="text-lg">No items found for your selection.</p>
+                </div>
+            </div>
+
+            
+
+<div id="resourceOptionsView" class="hidden">
+                <h2 id="resourceOptionsTitle" class="text-2xl font-bold mb-6 text-gray-900 text-center"></h2>
+                <div id="resourceOptionsList" class="card flex flex-col gap-3">
+                    
+
+</div>
+            </div>
+
+            
+
+<div id="documentListView" class="hidden">
+                 <h2 id="documentListTitle" class="text-2xl font-bold text-gray-900 text-center mb-6"></h2>
+                 <div id="documentList" class="card">
+                    
+
+</div>
+                 <div id="noDocuments" class="hidden text-center text-gray-500 mt-8">
+                    <p class="text-lg" id="noDocumentsMessage"></p>
+                </div>
+            </div>
+
+        </main>
+        
+        
+
+<footer class="footer border-t border-gray-200">
+            <p>Creator : Ashen Kavishka</p>
+            
+
+<a href="https://www.youtube.com/channel/UCHsvRbJYn5Z1QzlQRJYhvRQ" 
+               target="_blank" 
+               class="footer-link mt-1">
+                <i class="fab fa-youtube mr-1"></i> 
+                Ashen with Experiments
+            </a>
+        </footer>
+    </div>
+    
+    <!-- Contact Info Modal -->
+    <div id="contactModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="modalTitle" class="text-2xl font-bold mb-4 border-b pb-2 text-gray-900"></h3>
+            
+            <div class="space-y-4 text-gray-700">
+                <div class="flex items-start">
+                    <i class="fas fa-map-marker-alt text-blue-500 mt-1 mr-3 text-lg"></i>
+                    <div>
+                        <p class="font-semibold text-sm text-gray-500">Address</p>
+                        <p id="modalAddress" class="text-base"></p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <i class="fas fa-phone-alt text-blue-500 mt-1 mr-3 text-lg"></i>
+                    <div>
+                        <p class="font-semibold text-sm text-gray-500">Phone Number</p>
+                        <a id="modalPhone" href="#" class="text-blue-600 hover:underline text-base font-medium"></a>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <i class="fas fa-globe text-blue-500 mt-1 mr-3 text-lg"></i>
+                    <div>
+                        <p class="font-semibold text-sm text-gray-500">Website</p>
+                        <a id="modalWebsite" href="#" target="_blank" class="text-blue-600 hover:underline text-base font-medium"></a>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="document.getElementById('contactModal').classList.add('hidden')"
+                    class="mt-6 w-full py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition duration-300">
+                Close
+            </button>
+        </div>
+    </div>
+    <!-- End Contact Info Modal -->
+
+    <script>
+        // --- Configuration for Institution Tabs ---
+        const TAB_CONFIG = [
+            { display: "Kuliyapitiya", key: "Kuliyapitiya UC Data" },
+            { display: "Matara", key: "Matara UC Data" },
+            { display: "College of Jaffna", key: "Jaffna UC Data" }, 
+            { display: "Batangala", key: "Batangala UC Data" },
+            { display: "Ratmalana", key: "Ratmalana UC Data" },
+            { display: "Anuradhapura", key: "Anuradhapura UC Data" }
+        ];
+        
+        // --- Mapping for cleaner display names of the levels ---
+        const LEVEL_DISPLAY_MAP = {
+            "Foundation Level": "Foundation",
+            "NVQ Level 5 Sem 1": "L5 Sem 1",
+            "NVQ Level 5 Sem 2": "L5 Sem 2",
+            "NVQ Level 6 Sem 1": "L6 Sem 1",
+            "NVQ Level 6 Sem 2": "L6 Sem 2",
+        };
+
+        // ------------------------------------------------------------------
+        // --- UC CONTACT INFORMATION ---
+        // ------------------------------------------------------------------
+        const UC_CONTACT_INFO = {
+            "Anuradhapura UC Data": {
+                name: "University College of Anuradhapura",
+                address: "Stage 1, Dhamma Mawatha, Anuradhapura",
+                phone: "025 2232210",
+                website: "www.ucau.ac.lk",
+            },
+            "Batangala UC Data": {
+                name: "University College of Batangala",
+                address: "University College of Batangala, Eheliyagoda",
+                phone: "036 2233572",
+                website: "www.ucbatangala.lk",
+            },
+            "Jaffna UC Data": {
+                name: "University College of Jaffna",
+                address: "No. 79, Brown Road, Kokuvil, Jaffna",
+                phone: "021 2277111",
+                website: "www.ucjaffna.ac.lk",
+            },
+            "Kuliyapitiya UC Data": {
+                name: "University College of Kuliyapitiya",
+                address: "Ashoka Mawatha, Pannala Road, Kuliyapitiya",
+                phone: "037 2057376",
+                website: "www.uck.ac.lk",
+            },
+            "Matara UC Data": {
+                name: "University College of Matara",
+                address: "No. 649, Tangalla Road, Meddawatta, Matara",
+                phone: "041 2232167 / 041 2232167",
+                website: "www.ucmatara.ac.lk",
+            },
+            "Ratmalana UC Data": {
+                name: "University College of Ratmalana",
+                address: "No. 41, Saranankara Road, Ratmalana",
+                phone: "011 2626497",
+                website: "www.ucr.ac.lk",
+            }
+        };
+
+
+        // --- State Variables for Navigation ---
+        let selectedInstitution = "Jaffna UC Data"; // Initial state is explicitly Jaffna
+        let selectedCourse = null;
+        let selectedSemester = null;
+        let currentSubject = null;
+        let currentResourceType = null;
+
+        const VIEWS = {
+            COURSES: 'courses',
+            SUBJECTS_LIST: 'subjects_list',
+            RESOURCES: 'resources',
+            DOCUMENTS: 'documents'
+        };
+        let currentPage = VIEWS.COURSES;
+
+        // --- DOM Elements ---
+        const institutionTabsContainer = document.getElementById('institutionTabsContainer');
+        const levelTabsContainer = document.getElementById('levelTabsContainer');
+        const backButtonContainer = document.getElementById('backButtonContainer');
+        const backButton = document.getElementById('backButton');
+        const backButtonText = document.getElementById('backButtonText');
+
+        const subjectsView = document.getElementById('subjectsView');
+        const subjectsList = document.getElementById('subjectsList');
+        const searchInput = document.getElementById('searchInput');
+        const searchContainer = document.getElementById('searchContainer');
+        const currentTitle = document.getElementById('currentTitle');
+        const noResultsMessage = document.getElementById('noResults');
+
+        const resourceOptionsView = document.getElementById('resourceOptionsView');
+        const resourceOptionsTitle = document.getElementById('resourceOptionsTitle');
+        const resourceOptionsList = document.getElementById('resourceOptionsList');
+
+        const documentListView = document.getElementById('documentListView');
+        const documentListTitle = document.getElementById('documentListTitle');
+        const documentList = document.getElementById('documentList');
+        const noDocuments = document.getElementById('noDocuments');
+        const noDocumentsMessage = document.getElementById('noDocumentsMessage');
+        
+        // Modal Elements
+        const infoButton = document.getElementById('infoButton');
+        const contactModal = document.getElementById('contactModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalAddress = document.getElementById('modalAddress');
+        const modalPhone = document.getElementById('modalPhone');
+        const modalWebsite = document.getElementById('modalWebsite');
+        
+        // ------------------------------------------------------------------
+        // --- DATA STRUCTURES (Course and Subject data is kept the same) ---
+        // ------------------------------------------------------------------
+        
+        // 1. Unified Course Definitions (Code and Display Name)
+        const ALL_COURSES = {
+            "MT": "Mechatronics Technology", 
+            "CT": "Construction Technology",
+            "BST": "Building Services Technology",
+            "PT": "Production Technology",
+            "FT": "Food Technology",
+            "FMT": "Farm Machinery Technology",
+            "AARM": "Aquaculture and Aquatic Resources Management Technology",
+            "COSM": "Cosmetology",
+            "ETEC": "Electrical Technology",
+            "ELEC": "Electronic Technology",
+            "HMGT": "Hospitality Management",
+            "PHT": "Post-Harvest Technology",
+            "QS": "Quantity Surveying",
+            "RAC": "Refrigeration and Air Conditioning Technology",
+            "AT": "Automobile Technology",
+            "FDT": "Fashion Design Technology",
+            "EMT": "Event Management",
+            "MLM": "Maritime and Logistics Management",
+            "TTC": "Telecommunication Technology",
+        };
+        
+        // 2. Specific Courses offered by each UC (using short codes)
+        const UC_COURSE_MAPPING = {
+            // Jaffna remains the default list from previous versions (HND courses)
+            "Jaffna UC Data": ["MT", "CT", "BST", "PT", "FT", "FMT"], 
+            
+            "Kuliyapitiya UC Data": ["AT", "BST", "CT", "COSM", "FDT", "FMT"],
+            "Matara UC Data": ["AT", "CT", "ETEC", "MLM"],
+            "Batangala UC Data": ["CT", "COSM", "FMT", "EMT"],
+            "Ratmalana UC Data": ["ETEC", "EMT", "QS", "RAC", "TTC"],
+            "Anuradhapura UC Data": ["AARM", "BST", "COSM", "ETEC", "ELEC", "FT", "HMGT", "PHT", "QS", "RAC"],
+        };
+
+        const HND_LEVELS = ["Foundation Level", "NVQ Level 5 Sem 1", "NVQ Level 5 Sem 2", "NVQ Level 6 Sem 1", "NVQ Level 6 Sem 2"];
+        
+        // 3. Subject Lists (Only HNDMT/MT is detailed, others are generic placeholders)
+        const MT_SUBJECTS = {
+            "Foundation Level": [
+                "BASIC WORK SHOP PRACTICE 01 DM03", "BEP DM 10", "BW 01 DM 01", "BW 02 DM 04",
+                "ENGINEERING DRAWING DM 02", "ENGLISH", "ICT", "PNEUMATIC",
+            ],
+            "NVQ Level 5 Sem 1": [
+                "Applied Electricity", "Applied Electronics", "Engineering Mathematics 1", "Engineering Drawing 1",
+                "English", "ICT", "Safety & Workshop Enviroment", "Workplace Communication Management", 
+                "Workplace Information Management", "Workshop Technology", 
+            ],
+            "NVQ Level 5 Sem 2": [
+                "Engineering Material", "English", "Hydraulics & Electro Hydraulics", "Pneumatics & Electro pneumatic",
+                "ICT", "Mechatronic System 1", "Plan Work to be Performed at workplace", 
+                "Programmable Logic Controller - PLC",
+            ],
+        };
+
+        // Placeholder subjects for all other courses/levels
+        const PLACEHOLDER_SUBJECTS = {
+            "Foundation Level": ["Mathematics Basics", "Core Module 1", "Introduction to English", "ICT Fundamentals"],
+            "NVQ Level 5 Sem 1": ["Module 5.1 (Theory)", "Module 5.2 (Practical)", "Module 5.3", "Module 5.4", "Module 5.5"],
+            "NVQ Level 5 Sem 2": ["Module 5.6 (Lab)", "Module 5.7", "Module 5.8", "Module 5.9", "Module 5.10"],
+            "NVQ Level 6 Sem 1": ["Advanced Project A", "Research Methods", "Industry Specific Topic 1"],
+            "NVQ Level 6 Sem 2": ["Final Thesis Submission", "Industrial Internship", "Ethics and Practice"],
+        };
+
+        /**
+         * Helper function to generate subjects, including the specific links for MT (Mechatronics).
+         */
+        function generateSubjects(courseCode, level, subjectNames) {
+            const subjects = [];
+
+            for (let i = 0; i < subjectNames.length; i++) {
+                const subjectName = subjectNames[i];
+                const subjectCodePrefix = `${courseCode}-${level.charAt(0)}${i + 1}`;
+                
+                let details = [
+                    // Default placeholders for all subjects/courses
+                    { 
+                        type: "Past papers", 
+                        docTitle: `${subjectName} Exam Paper (2023/2024)`, 
+                        url: `#${subjectCodePrefix}p1` 
+                    },
+                    { 
+                        type: "Lecture Notes", 
+                        docTitle: `${subjectName} Module 1 Slides`, 
+                        url: `#${subjectCodePrefix}n1` 
+                    },
+                    { 
+                        type: "Assignments", 
+                        docTitle: `${subjectName} Coursework 1 Brief`, 
+                        url: `#${subjectCodePrefix}a1` 
+                    },
+                ];
+
+                // --- Specific Data Injection for Mechatronics (MT) Foundation ---
+                if (courseCode === 'MT' && level === 'Foundation Level') {
+                    // Match the subject name for BASIC WORK SHOP PRACTICE
+                    if (subjectName.includes("BASIC WORK SHOP PRACTICE")) { 
+                        details = [
+                            // Links to a file you would place in the same folder as index.html
+                            { 
+                                type: "Past papers", 
+                                docTitle: "Basic Workshop Final Exam 2023 (Paper)", 
+                                url: "HNDMT_BW_2023_Paper.pdf" 
+                            },
+                            // Links to a file you would place in a subfolder named 'notes'
+                            { 
+                                type: "Lecture Notes", 
+                                docTitle: "Workshop Safety Procedure Handbook (Module 1)", 
+                                url: "notes/HNDMT_M1_Notes.pdf" 
+                            },
+                            { 
+                                type: "Assignments", 
+                                docTitle: "Workshop Project 1 Instructions (Placeholder)", 
+                                url: `#${subjectCodePrefix}a1` 
+                            },
+                        ];
+                    } 
+                    // Match the subject name for ENGINEERING DRAWING
+                    else if (subjectName.includes("ENGINEERING DRAWING")) { 
+                        details = [
+                            { 
+                                type: "Past papers", 
+                                docTitle: "Drawing Final Exam 2022/2023", 
+                                url: "Eng_Drawing_2022_Final.pdf" // <-- Place this file in UC_Papers/
+                            },
+                            { 
+                                type: "Past papers", 
+                                docTitle: "Drawing Paper Model (Sample)", 
+                                url: "Eng_Drawing_Model_Paper.pdf" // <-- Place this file in UC_Papers/
+                            },
+                            { 
+                                type: "Lecture Notes", 
+                                docTitle: "Introduction to AutoCAD Slides", 
+                                url: "notes/AutoCAD_Lecture_01.pdf" // <-- Place this file in UC_Papers/notes/
+                            },
+                            { 
+                                type: "Assignments", 
+                                docTitle: "Drawing Assignment 1: Orthographic Views", 
+                                url: `#${subjectCodePrefix}a1` 
+                            },
+                        ];
+                    }
+                }
+                
+                subjects.push({
+                    title: subjectName,
+                    code: subjectCodePrefix,
+                    details: details 
+                });
+            }
+            return subjects;
+        }
+
+        // --- Build the Resources Structure (UC -> Course -> Level -> Subjects) ---
+        const resources = {};
+
+        // Iterate through all UCs defined in the course mapping
+        for (const [ucKey, courseCodes] of Object.entries(UC_COURSE_MAPPING)) {
+            resources[ucKey] = {}; // Initialize the UC
+
+            // Iterate through the specific courses offered at this UC
+            courseCodes.forEach(courseCode => {
+                resources[ucKey][courseCode] = {}; // Initialize the Course
+
+                // Assign levels and subjects for this course
+                HND_LEVELS.forEach(level => {
+                    let subjectsList;
+                    
+                    // Use the specific list for Mechatronics, otherwise use generic placeholders
+                    if (courseCode === "MT" && MT_SUBJECTS[level]) {
+                        subjectsList = MT_SUBJECTS[level];
+                    } else {
+                        subjectsList = PLACEHOLDER_SUBJECTS[level];
+                    }
+                    
+                    // Only generate if there is a list of subjects
+                    if (subjectsList && subjectsList.length > 0) {
+                        resources[ucKey][courseCode][level] = generateSubjects(courseCode, level, subjectsList);
+                    }
+                });
+            });
+        }
+        
+        // ------------------------------------------------------------------
+        // --- END OF DATA GENERATION ---
+        // ------------------------------------------------------------------
+
+
+        // --- Navigation Logic ---
+        
+        function getCurrentInstitutionDisplayName() {
+            const config = TAB_CONFIG.find(c => c.key === selectedInstitution);
+            return config ? config.display : 'Unknown College';
+        }
+
+        function navigate(page) {
+            currentPage = page;
+            // Hide all content views and controls
+            searchContainer.classList.add('hidden');
+            subjectsView.classList.add('hidden');
+            resourceOptionsView.classList.add('hidden');
+            documentListView.classList.add('hidden');
+            backButtonContainer.classList.add('hidden');
+            levelTabsContainer.classList.add('hidden'); // Initially hide level container
+
+            // Show the appropriate view based on state
+            if (currentPage === VIEWS.COURSES) {
+                subjectsView.classList.remove('hidden');
+                levelTabsContainer.classList.add('hidden');
+                
+                currentTitle.textContent = `Select Course (${getCurrentInstitutionDisplayName()})`; 
+                showCourses();
+            } else if (currentPage === VIEWS.SUBJECTS_LIST) {
+                subjectsView.classList.remove('hidden');
+                searchContainer.classList.remove('hidden');
+                levelTabsContainer.classList.remove('hidden'); // Show level container
+                backButtonContainer.classList.remove('hidden');
+                backButton.onclick = () => navigate(VIEWS.COURSES); 
+                backButtonText.textContent = `Back to Courses`;
+                currentTitle.textContent = `${selectedCourse} - ${selectedSemester}`;
+                renderSemesterTabs();
+                updateSubjectsList();
+            } else if (currentPage === VIEWS.RESOURCES) {
+                resourceOptionsView.classList.remove('hidden');
+                backButtonContainer.classList.remove('hidden');
+                backButton.onclick = () => showSubjectsForSemester(selectedCourse, selectedSemester, true); 
+                backButtonText.textContent = `Back to Subjects`;
+                if(currentSubject) {
+                    showResourceOptions(currentSubject, true); 
+                }
+            } else if (currentPage === VIEWS.DOCUMENTS) {
+                documentListView.classList.remove('hidden');
+                backButtonContainer.classList.remove('hidden');
+                backButton.onclick = () => showResourceOptions(currentSubject);
+                backButtonText.textContent = `Back to Resources`;
+                if (currentResourceType) {
+                    showDocumentList(currentResourceType, true);
+                }
+            }
+        }
+
+        // 1. Renders the institution tabs
+        function renderInstitutionTabs() {
+            institutionTabsContainer.innerHTML = '';
+
+            TAB_CONFIG.forEach(config => {
+                const button = document.createElement('button');
+                button.textContent = config.display;
+                button.classList.add(
+                    'tab-button', 'px-4', 'py-2', 'rounded-full', 
+                    'transition', 'duration-300', 'text-sm', 'text-nowrap'
+                );
+                button.dataset.institution = config.key;
+
+                if (config.key === selectedInstitution) {
+                    button.classList.add('active');
+                }
+
+                button.addEventListener('click', (event) => {
+                    const newKey = event.currentTarget.dataset.institution;
+                    selectedInstitution = newKey;
+                    
+                    document.querySelectorAll('#institutionTabsContainer .tab-button').forEach(btn => btn.classList.remove('active'));
+                    event.currentTarget.classList.add('active');
+                    
+                    selectedCourse = null;
+                    selectedSemester = null;
+                    navigate(VIEWS.COURSES);
+                });
+                institutionTabsContainer.appendChild(button);
+            });
+            
+            // Scroll to center the initially selected tab
+            const activeTab = institutionTabsContainer.querySelector('.tab-button.active');
+            if (activeTab) {
+                const scrollPos = activeTab.offsetLeft - (institutionTabsContainer.offsetWidth / 2) + (activeTab.offsetWidth / 2);
+                setTimeout(() => {
+                    institutionTabsContainer.scrollLeft = scrollPos;
+                }, 0);
+            }
+        }
+
+
+        // 2. Shows the list of HND courses
+        function showCourses() {
+            selectedCourse = null;
+            subjectsList.innerHTML = '';
+            
+            const coursesAtUC = resources[selectedInstitution];
+            
+            if (!coursesAtUC || Object.keys(coursesAtUC).length === 0) {
+                 subjectsList.innerHTML = '<p class="text-center text-gray-500">No courses available for this institution.</p>';
+                 return;
+            }
+
+            // Get course codes and sort them alphabetically by display name
+            const courseCodes = Object.keys(coursesAtUC);
+            courseCodes.sort((a, b) => {
+                const nameA = ALL_COURSES[a] || a;
+                const nameB = ALL_COURSES[b] || b;
+                return nameA.localeCompare(nameB);
+            });
+
+
+            courseCodes.forEach(code => {
+                const name = ALL_COURSES[code] || code;
+                
+                const courseItem = document.createElement('div');
+                courseItem.classList.add('nav-item', 'bg-blue-50', 'text-blue-700', 'hover:bg-blue-100');
+                
+                // Display the Course Code (MT, CT, etc.) and the Full Name
+                courseItem.innerHTML = `
+                    <span class="font-semibold">${code} - ${name}</span>
+                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                `;
+                
+                courseItem.addEventListener('click', () => {
+                    selectedCourse = code;
+                    // Automatically select the first available level/semester
+                    const availableSemesters = Object.keys(resources[selectedInstitution][selectedCourse]);
+                    selectedSemester = availableSemesters.length > 0 ? availableSemesters[0] : null;
+                    showSubjectsForSemester(selectedCourse, selectedSemester);
+                });
+                subjectsList.appendChild(courseItem);
+            });
+        }
+
+        // 3. Renders Semester tabs in a new vertical list alignment
+        function renderSemesterTabs() {
+            levelTabsContainer.innerHTML = '';
+            levelTabsContainer.classList.remove('hidden'); // Ensure container is visible
+            
+            if (!selectedCourse || !resources[selectedInstitution][selectedCourse]) return;
+
+            const semesters = Object.keys(resources[selectedInstitution][selectedCourse]);
+
+            if (!semesters.includes(selectedSemester)) {
+                selectedSemester = semesters[0];
+            }
+
+            semesters.forEach((semester, index) => {
+                const button = document.createElement('button');
+                const buttonText = LEVEL_DISPLAY_MAP[semester] || semester; 
+                button.title = semester; 
+                
+                // New Vertical List Styling - using flex to align text and arrow
+                button.classList.add(
+                    'level-button', 
+                    'w-full', 
+                    'flex', 
+                    'justify-between', 
+                    'items-center', 
+                    'px-4', 
+                    'py-3', 
+                    'cursor-pointer', 
+                    'transition', 
+                    'duration-200',
+                    'text-left',
+                    'font-medium'
+                );
+                
+                // Add separator between items, except the last one
+                if (index < semesters.length - 1) {
+                    button.classList.add('border-b', 'border-gray-100');
+                }
+                
+                // Active State Styling: Use solid blue background for the selected level
+                if (semester === selectedSemester) {
+                    button.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700', 'rounded-lg', 'shadow-md');
+                    // Add a small margin to make the active button visually pop out a bit
+                    button.style.margin = '4px 0'; 
+                } else {
+                    button.classList.add('text-gray-800', 'hover:bg-gray-50');
+                }
+                
+                // Inner content with an arrow icon
+                const arrowColor = semester === selectedSemester ? 'text-white' : 'text-gray-400';
+                button.innerHTML = `
+                    <span>${buttonText}</span>
+                    <svg class="w-5 h-5 ${arrowColor}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                `;
+
+                button.addEventListener('click', () => {
+                    selectedSemester = semester;
+                    // Re-render tabs to update active state
+                    renderSemesterTabs(); 
+                    const courseName = ALL_COURSES[selectedCourse] || selectedCourse;
+                    currentTitle.textContent = `${courseName} - ${LEVEL_DISPLAY_MAP[selectedSemester]}`;
+                    updateSubjectsList(); 
+                });
+                levelTabsContainer.appendChild(button);
+            });
+        }
+
+        // 4. Shows the subjects list for the selected course/semester
+        function showSubjectsForSemester(courseCode, semesterName, isBackNavigation = false) {
+            selectedCourse = courseCode;
+            selectedSemester = semesterName;
+            searchInput.value = ''; 
+            navigate(VIEWS.SUBJECTS_LIST);
+        }
+
+        // 5. Renders the subjects list based on the current context and search input
+        function updateSubjectsList() {
+            const currentCourseData = resources[selectedInstitution][selectedCourse];
+            
+            if (!selectedCourse || !selectedSemester || !currentCourseData || !currentCourseData[selectedSemester]) {
+                subjectsList.innerHTML = '';
+                noResultsMessage.classList.remove('hidden');
+                return;
+            }
+            
+            const subjects = currentCourseData[selectedSemester];
+            const searchQuery = searchInput.value.toLowerCase();
+            let filteredSubjects = subjects.filter(subject => 
+                subject.title.toLowerCase().includes(searchQuery) || 
+                subject.code.toLowerCase().includes(searchQuery)
+            );
+            
+            // Sort subjects alphabetically by title
+            filteredSubjects.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
+
+            subjectsList.innerHTML = '';
+            if (filteredSubjects.length === 0) {
+                noResultsMessage.classList.remove('hidden');
+                currentTitle.textContent = `${selectedCourse} - ${selectedSemester} (0 Subjects)`;
+            } else {
+                noResultsMessage.classList.add('hidden');
+                const courseName = ALL_COURSES[selectedCourse] || selectedCourse;
+                currentTitle.textContent = `${courseName} - ${LEVEL_DISPLAY_MAP[selectedSemester]}`;
+                
+                filteredSubjects.forEach(subject => {
+                    const subjectItem = document.createElement('div');
+                    subjectItem.classList.add('nav-item');
+                    const displayTitle = subject.title;
+                    subjectItem.innerHTML = `
+                        <span class="subject-title">${displayTitle}</span>
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    `;
+                    
+                    subjectItem.addEventListener('click', () => showResourceOptions(subject));
+                    subjectsList.appendChild(subjectItem);
+                });
+            }
+        }
+
+        // 6. Shows the three resource options (buttons) for a subject
+        function showResourceOptions(subject, isBackNavigation = false) {
+            currentSubject = subject;
+            resourceOptionsTitle.textContent = subject.title;
+            resourceOptionsList.innerHTML = '';
+
+            const resourceTypes = ["Past papers", "Lecture Notes", "Assignments"];
+            
+            // Calculate actual file counts (not just placeholders)
+            const counts = { "Past papers": 0, "Lecture Notes": 0, "Assignments": 0 };
+            subject.details.forEach(doc => {
+                if (counts.hasOwnProperty(doc.type)) {
+                    // Only count if it's a real file path, not a placeholder hash
+                    if (!doc.url.startsWith('#')) {
+                       counts[doc.type]++;
+                    }
+                }
+            });
+            // Show total number of documents, even placeholders
+            const totalDocs = { "Past papers": 0, "Lecture Notes": 0, "Assignments": 0 };
+            subject.details.forEach(doc => {
+                 if (totalDocs.hasOwnProperty(doc.type)) {
+                    totalDocs[doc.type]++;
+                }
+            });
+
+
+            resourceTypes.forEach(type => {
+                const button = document.createElement('button');
+                button.classList.add('nav-item', 'bg-gray-50', 'rounded-lg', 'shadow-sm', 'hover:shadow-md');
+                
+                let linkStatus = '';
+                if (counts[type] > 0) {
+                    // Show count of real files if available
+                    linkStatus = `<span class="text-sm font-normal text-green-600">${counts[type]} real files</span>`;
+                } else {
+                    // Otherwise show total documents (mostly placeholders)
+                    linkStatus = `<span class="text-sm font-normal text-gray-500">${totalDocs[type]} documents</span>`;
+                }
+
+                button.innerHTML = `
+                    <span>${type}</span>
+                    ${linkStatus}
+                `;
+                button.addEventListener('click', () => showDocumentList(type));
+                resourceOptionsList.appendChild(button);
+            });
+
+            if (!isBackNavigation) {
+                navigate(VIEWS.RESOURCES);
+            }
+        }
+
+        // 7. Shows the final list of documents for a specific resource type
+        function showDocumentList(resourceType, isBackNavigation = false) { 
+            currentResourceType = resourceType;
+            documentListTitle.textContent = `${resourceType} for ${currentSubject.title}`;
+            documentList.innerHTML = '';
+
+            const documents = currentSubject.details.filter(d => d.type === resourceType);
+
+            if (documents.length === 0) {
+                documentList.innerHTML = '';
+                noDocumentsMessage.textContent = `No ${resourceType.toLowerCase()} found for ${currentSubject.title}.`;
+                noDocuments.classList.remove('hidden');
+            } else {
+                noDocuments.classList.add('hidden');
+                documents.forEach(doc => {
+                    const link = document.createElement('a');
+                    link.href = doc.url;
+                    link.target = "_blank";
+                    link.classList.add('nav-item', 'bg-white', 'text-blue-700', 'font-normal');
+                    
+                    let icon;
+                    
+                    // Show a warning icon if the link is a placeholder (starts with #)
+                    if (doc.url.startsWith('#')) {
+                         icon = `<svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`;
+                         link.target = "_self"; // Don't open a new tab for hash links
+                    } else {
+                        // Use a PDF/File icon for real files
+                        icon = `<i class="fas fa-file-pdf text-red-500 w-5 h-5"></i>`; 
+                    }
+
+                    link.innerHTML = `
+                        <span>${doc.docTitle}</span>
+                        ${icon}
+                    `;
+                    documentList.appendChild(link);
+                });
+            }
+
+            if (!isBackNavigation) {
+                navigate(VIEWS.DOCUMENTS);
+            }
+        }
+        
+        // --- Modal Functionality ---
+        function showContactInfo() {
+            const info = UC_CONTACT_INFO[selectedInstitution];
+            if (!info) {
+                // Should not happen, but for safety
+                alert('Contact information not found for this college.');
+                return;
+            }
+
+            // Clean up the phone number for the 'tel' link by removing spaces/slashes
+            const cleanPhone = info.phone.split('/')[0].trim().replace(/\s/g, '');
+            const websiteUrl = info.website.startsWith('http') ? info.website : `http://${info.website}`;
+
+            modalTitle.textContent = info.name;
+            modalAddress.textContent = info.address;
+
+            modalPhone.textContent = info.phone;
+            modalPhone.href = `tel:${cleanPhone}`;
+
+            modalWebsite.textContent = info.website;
+            modalWebsite.href = websiteUrl;
+
+            contactModal.classList.remove('hidden');
+        }
+
+        // --- Event Listeners ---
+        searchInput.addEventListener('input', updateSubjectsList);
+        infoButton.addEventListener('click', showContactInfo);
+        
+        // Hide modal when clicking the overlay (but not the content)
+        contactModal.addEventListener('click', (e) => {
+            if (e.target === contactModal) {
+                contactModal.classList.add('hidden');
+            }
+        });
+
+
+        // --- Initial Load ---
+        window.onload = () => {
+            renderInstitutionTabs(); // Render all 6 UC tabs first
+            navigate(VIEWS.COURSES); // Then start the navigation at the initial UC
+        };
+
+    </script>
+
+</body>
+</html>
